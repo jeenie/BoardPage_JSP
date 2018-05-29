@@ -1,0 +1,15 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `article_count`( 
+	IN ss VARCHAR(10), 
+    IN st NVARCHAR(100) 
+)
+BEGIN 
+
+SELECT COUNT(a.ID) 
+FROM article a 
+LEFT JOIN Board b On a.boardId = b.id 
+LEFT JOIN User u On a.userID = u.id 
+WHERE
+	(ss = '0') or
+    (ss = '1' AND u.name LIKE st) OR
+    (ss = '2' AND a.title LIKE st);
+END
