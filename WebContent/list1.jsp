@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.net.*, p201632003.*"%>
+<%@ page import="java.util.*, java.net.*, java.text.SimpleDateFormat,p201632003.*"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <%
 	int currentPage = 1;
@@ -76,9 +76,9 @@ select {
 					<option value="4" <%="4".equals(od) ? "selected" : ""%>>제목 오름차순</option>
 				</select> 
 				<select name="ss" class="form-control">
-					<option value="0" <%="0".equals(od) ? "selected" : ""%>>전체</option>
-					<option value="1" <%="1".equals(od) ? "selected" : ""%>>작성자</option>
-					<option value="2" <%="2".equals(od) ? "selected" : ""%>>제목</option>
+					<option value="0" <%="0".equals(ss) ? "selected" : ""%>>전체</option>
+					<option value="1" <%="1".equals(ss) ? "selected" : ""%>>작성자</option>
+					<option value="2" <%="2".equals(ss) ? "selected" : ""%>>제목</option>
 				</select>
 				<input type="text" class="form-control" name="st" value="<%=st%>" />
 			</div>
@@ -100,12 +100,12 @@ select {
 					for (Article article : list) {
 				%>
 				<tr
-					data-url="edit1.jsp?id=<%=article.getId()%>&pg=<%=currentPage%>ss=<%=ss%>&st=<%=stEncoded%>&od=od=<%=od%>">
+					data-url="edit1.jsp?id=<%=article.getId()%>&pg=<%=currentPage%>&ss=<%=ss%>&st=<%=stEncoded%>&od=<%=od%>">
 					<td><%=article.getId()%></td>
 					<td><%=article.getNo()%></td>
 					<td><%=article.getBoardName()%></td>
 					<td><%=article.getUserName()%></td>
-					<td><%=article.getWriteTime()%></td>
+					<td><%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(article.getWriteTime())%></td>
 					<td><%=article.getTitle()%></td>
 				</tr>
 				<%

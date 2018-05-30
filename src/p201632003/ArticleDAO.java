@@ -49,7 +49,7 @@ public class ArticleDAO {
 	}
 
 	public static Article findOne(int id) throws Exception {
-		String sql = "SELECT a.id, a.no, b.boardName, u.name, a.writeTime, a.title, a.body "
+		String sql = "SELECT a.*, b.boardName, u.name "
 				+ "FROM article a LEFT JOIN Board b On a.boardId = b.id " + "LEFT JOIN User u On a.userID = u.id "
 				+ "WHERE a.id =?";
 		try (Connection connection = DB.getConnection("bbs2");
@@ -62,8 +62,10 @@ public class ArticleDAO {
 					article.setTitle(resultSet.getString("title"));
 					article.setBody(resultSet.getString("body").replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""));
 					article.setBoardName(resultSet.getString("boardName"));
+					article.setUserId(resultSet.getInt("userId"));
 					article.setUserName(resultSet.getString("name"));
 					article.setWriteTime(resultSet.getTimestamp("writeTime"));
+					article.setNotice(resultSet.getBoolean("notice"));
 
 					return article;
 				}

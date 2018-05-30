@@ -3,17 +3,21 @@
 <%@ page import="java.util.*, java.net.*, p201632003.*"%>
 <%
 	request.setCharacterEncoding("UTF-8");
+
 	String 에러메시지 = null;
 	String s1 = request.getParameter("id");
 	int id = ParseUtils.parseInt(s1, 0);
+
 	String pg = request.getParameter("pg");
 	String ss = request.getParameter("ss");
 	String st = request.getParameter("st");
 	if (ss == null) ss = "0";
 	if (st == null) st = "";
 	String stEncoded = URLEncoder.encode(st, "UTF-8");
+	
 	String od = request.getParameter("od");
 	Article article = null;
+	
 	if (request.getMethod().equals("GET")) {
 		article = ArticleDAO.findOne(id);
 	} else {
@@ -23,8 +27,7 @@
 		article.setBody(request.getParameter("body"));
 		String s2 = request.getParameter("userid");
 		article.setUserId(ParseUtils.parseInt(s2, 1));
-		String s3 = request.getParameter("notice");
-		article.setNotice(s3.equals("true")? true : false);
+		article.setNotice((Boolean.parseBoolean(request.getParameter("notice"))));
 		if (article.getTitle() == null || article.getTitle().length() == 0)
 			에러메시지 = "제목을 입력하세요";
 		else if (article.getBody() == null || article.getBody().length() == 0)
@@ -72,7 +75,7 @@ input.form-control, select.form-control {
 					name="body"> <%=article.getBody()%> </textarea>
 			</div>
 			<div class="form-group">
-				<label>작성자</label> <select class="form-control" name="departmentId">
+				<label>작성자</label> <select class="form-control" name="userid">
 					<%
 						for (User u : UserDAO.findAll()) {
 					%>
