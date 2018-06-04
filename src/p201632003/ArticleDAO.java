@@ -14,7 +14,7 @@ public class ArticleDAO {
 			statement.setInt(1, (currentPage - 1) * pageSize); // firstRecordIndex 
 			statement.setInt(2, pageSize); // pageSize 
 			statement.setString(3, ss); // 조회 방법 
-			statement.setString(4, st + "%"); // 검색 문자열 
+			statement.setString(4, "%" + st + "%"); // 검색 문자열 
 			statement.setString(5, od); // 정렬 순서
 			try (ResultSet resultSet = statement.executeQuery()) {
 				ArrayList<Article> list = new ArrayList<Article>();
